@@ -32,18 +32,18 @@ var (
 )
 
 func Init() {
-	flag.StringVar(&dbdriver, "db", "influxdb", "backend database,mysql or influxdb,default mysql")
+	flag.StringVar(&dbdriver, "db", "influxdb", "backend database,mysql or influxdb,default influxdb")
 	flag.StringVar(&mysqluser, "myuser", "docker", "mysql db user,default docker")
 	flag.StringVar(&mysqlpass, "mypass", "docker", "mysql db user's pass ,default docker")
-	flag.StringVar(&mysqlhost, "myhost", "172.16.6.156", "mysql db host,default 127.0.0.1")
+	flag.StringVar(&mysqlhost, "myhost", "127.0.0.1", "mysql db host,default 127.0.0.1")
 	flag.IntVar(&mysqlport, "myport", 3306, "mysql db host port ,default 3306")
 	flag.StringVar(&mysqldb, "mydb", "docker", "mysqldb name ,default docker")
 	flag.StringVar(&dockerAPIurl, "dockerAPIurl", "http://172.16.16.2:8888", "docker remote API ,default http://127.0.0.1:8888, eg: /usr/bin/dockerd   -H 127.0.0.1:8888 -H unix:///var/run/docker.sock")
 	flag.IntVar(&interval, "interval", 120, "the frequency(seconds) of collect data ,default 120")
-	flag.BoolVar(&showlog, "log", true, "showlog ?,default false")
+	flag.BoolVar(&showlog, "log", true, "showlog ?,default true")
 	flag.IntVar(&threads, "threads", 2, "how many thread to collect,default 2")
 
-	flag.StringVar(&influxurl, "influxurl", "http://172.16.18.2:8086", "influxdb API address")
+	flag.StringVar(&influxurl, "influxurl", "http://127.0.0.1:8086", "influxdb API address")
 	flag.StringVar(&influxdb, "influxdb", "docker", "infulx database name ,default docker")
 	flag.StringVar(&influxuser, "influxuser", "docker", "influx login username ,default docker")
 	flag.StringVar(&influxpass, "influxpassword", "docker", "influxdb login password,default docker")

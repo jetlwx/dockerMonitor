@@ -73,7 +73,7 @@ func gentField(f []Fileds) (n map[string]interface{}) {
 	return m
 }
 
-func AddInfluxDBPoint(c client.Client, bp client.BatchPoints, measureName string, tag []Tags, field []Fileds, t time.Time) error {
+func AddInfluxDBPoint(c client.Client, bp client.BatchPoints, measureName string, tag []Tags, field []Fileds, t time.Time) {
 	// Create a point and add to batch
 	fmt.Println("tag=", tag)
 	fmt.Println("field=", field)
@@ -82,30 +82,24 @@ func AddInfluxDBPoint(c client.Client, bp client.BatchPoints, measureName string
 	pt, err := client.NewPoint(measureName, tags, fileds, t)
 	if err != nil {
 		log.Println("Create New Point error:", err)
-		return err
 	}
 
 	bp.AddPoint(pt)
+	return
+}
 
+func WriteDB(c client.Client, bp client.BatchPoints) {
 	// Write the batch
 	if err := c.Write(bp); err != nil {
 		log.Println("Write the batch error:", err)
-		return err
 	}
-	return nil
-}
 
-/*
-pt, err := client.NewPoint("cpu_usage", tags, fields, time.Now())
+	err := c.Close()
 	if err != nil {
-		log.Fatal(err)
-	}
-	bp.AddPoint(pt)
-
-	// Write the batch
-	if err := c.Write(bp); err != nil {
-		log.Fatal(err)
+		log.Println("[E] error at close conn", err)
+	} else {
+		log.Println("close ok")
 	}
 
-
-*/
+	return
+}

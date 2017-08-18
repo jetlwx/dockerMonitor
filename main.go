@@ -76,7 +76,7 @@ func main() {
 				go models.GetDockinfo(dockerAPIurl, v.ID, v.ContainerName, v.PodName, &wg, showlog, cli, bp)
 			}
 			wg.Wait()
-
+			models.WriteDB(cli, bp)
 		}
 
 		time.Sleep(1 * time.Second)
